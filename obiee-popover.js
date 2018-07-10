@@ -25,25 +25,6 @@ var showPopover = function () {
 
     var thisElem = $(this);
 
-    //alert("show");
-
-    // $.getJSON("https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson", function (data) {
-
-    //     var dataParsed = JSON.parse(data);
-    //     var contentHtml = "";
-    //     for (var key in dataParsed) {
-    //         if (dataParsed.hasOwnProperty(key)) {
-    //             contentHtml += "<h5>" + key + "</h5>" + "<p>" + dataParsed[key] + "</p>";
-    //         }
-    //     }
-
-    //     thisElem.popover({
-    //         content: contentHtml,
-    //         html: true
-    //     }).popover('show');
-
-    // });
-
     $.ajax({
         url: "https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson",
         dataType: 'json',
@@ -72,10 +53,6 @@ var showPopover = function () {
             }).popover('show');
         }
     });
-
-
-
-
 
 };
 
