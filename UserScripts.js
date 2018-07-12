@@ -1,0 +1,8 @@
+/* BEGIN: Previous scripts defined */
+USERSCRIPT=function(){};USERSCRIPT.parameter=function(b,a,c){this.name=b;this.prompt=a;this.value=c};USERSCRIPT.example_displayParameters=function(b){var c="";for(args in b){var d=args;var a=b[d];c+="Parameter name: "+d+"  Value: "+a;c+="\n"}alert(c.length==0?"No Parameters":c)};USERSCRIPT.example_displayParameters.publish={parameters:[new USERSCRIPT.parameter("p1","Enter value for Param 1","p1 default value"),new USERSCRIPT.parameter("p2","Enter value for Param 2","p2 default value"),new USERSCRIPT.parameter("p3","Enter value for Param 3")]};USERSCRIPT.sendMessage=function(a){saw.ondemandload.loadScripts({messageTemplate:"kuiDeliversFiles"},null,USERSCRIPT.sendMessageCallback,null,a)};USERSCRIPT.sendMessageCallback=function(d){var c=d.guid;var a=d.subject;var b=d.body;obide.IBotService.sendMessage([c],null,a,b,obide.IBotService.Priority.NORMAL)};USERSCRIPT.sendMessage.publish={parameters:[new USERSCRIPT.parameter("guid","Enter recipient GUID",""),new USERSCRIPT.parameter("subject","Enter subject",""),new USERSCRIPT.parameter("body","Enter body","")]};USERSCRIPT.getReportXMLActionLink=function(a){return saw.dashboard.getAnalysisMetaDataInDashboardByIndexArray(a)};USERSCRIPT.getReportXMLActionLink.publish={parameters:[new USERSCRIPT.parameter("nIndex","Enter report id","1"),new USERSCRIPT.parameter("sUserCallback","Enter call back function","saw.dashboard.getReportXMLCallBack")]};USERSCRIPT.example_hideMeDuringBrowse=function(){alert("But I can still be called")};
+/* END: Previous scripts defined */
+
+var script = document.createElement("script");
+script.type = "text/javascript";
+script.src = "https://ir.unlv.edu/external-scripts/obiee-custom.js";
+document.getElementsByTagName("head")[0].appendChild(script);

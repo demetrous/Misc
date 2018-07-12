@@ -65,7 +65,7 @@ var hidePopover = function () {
 };
 
 
-$('.ddApplications').clickToggle(showPopover, hidePopover);
+$('.ddApplications').first().clickToggle(showPopover, hidePopover);
 
 var closePopup = function(param){
     gsODS.clicked = false;
