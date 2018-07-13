@@ -10,6 +10,15 @@ window.onload = function () {
         //console.log(document.getElementById('criteriaDataBrowser'));
         //$("#criteriaDataBrowser span span span.treeNodeText").click(console.log($(this)));
 
+
+        $("#criteriaDataBrowser .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeChildContainer ").bind('DOMSubtreeModified',function(event) {
+            console.log($(this).children(".treeNode").last().children('.treeLine').children('.treeNodeDetails').children('.treeNodeText').text());
+        });
+
+
+
+
+
         $(document).on("click", "#criteriaDataBrowser span span.treeNodeDetails span.treeNodeText", function () {
             //$(this).attr('data-tippy','');
             console.log($(this).text());
@@ -63,9 +72,11 @@ window.onload = function () {
 
             const tip = tippy('#newItem', {
                 html: document.querySelector('#newDiv'),
-                maxWidth: "100px",
-                placement: "right",
+                maxWidth: "40vw",
+                placement: "left-start",
                 html: '#newDiv',
+                interactive: true,
+                animateFill: false,
                 onShow() {
                     // `this` inside callbacks refers to the popper element
                     const content = this.querySelector('.tippy-content')
@@ -107,6 +118,17 @@ window.onload = function () {
                 onHidden() {
                     const content = this.querySelector('.tippy-content')
                     content.innerHTML = initialText
+                },
+                // prevent tooltip from displaying over button
+                popperOptions: {
+                    modifiers: {
+                        preventOverflow: {
+                            enabled: false
+                        },
+                        hide: {
+                            enabled: false
+                        }
+                    }
                 }
             })
 
@@ -174,11 +196,11 @@ var loadTippy = function () {
     //console.log('hi from tippy');
 
     const tip = tippy('#criteriaDataBrowser span span span', {
-        target: '',
+        //target: '',
         interactive: true,
         trigger: "click",
         arrow: true,
-        maxWidth: '40vh',
+        maxWidth: '40vw',
         placement: 'left-start',
         html: '#template',
         onShow() {
