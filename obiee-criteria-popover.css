@@ -1,0 +1,28 @@
+.tippy-tooltip {
+    position: relative;
+    color: #000;
+    border-radius: 4px;
+    font-size: .9rem;
+    padding: .3rem .6rem;
+    text-align: left;
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #d4e0ef;   
+    
+}
+
+.tippy-tooltip .tippy-content {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.tippy-popper[x-placement^=right] .tippy-arrow {
+    border-right: 7px solid #d4e0ef;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    left: -7px;
+    margin: 3px 0;
+    -webkit-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+}
