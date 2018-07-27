@@ -39,7 +39,7 @@ function myFunc() {
     }
 }
 
-myFunc();
+//myFunc();
 
 function loadDoc() {
     var xhttp = new XMLHttpRequest();

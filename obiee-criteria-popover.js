@@ -10,24 +10,49 @@ window.onload = function () {
         //console.log(document.getElementById('criteriaDataBrowser'));
         //$("#criteriaDataBrowser span span span.treeNodeText").click(console.log($(this)));
 
+        $("#criteriaDataBrowser .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeChildContainer").bind('DOMSubtreeModified', function (event) {
 
-        $("#criteriaDataBrowser .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeChildContainer ").bind('DOMSubtreeModified',function(event) {
-            console.log($(this).children(".treeNode").last().children('.treeLine').children('.treeNodeDetails').children('.treeNodeText').text());
+            var nodeTitle = $(this).siblings('.treeLine').text();
+
+            var termTitle = $(this).children(".treeNode").last().children('.treeLine').children('.treeNodeDetails').children('.treeNodeText').text();
+
+            console.log(nodeTitle + " + " + termTitle);
+
         });
 
 
+        //var target = 
 
 
 
-        $(document).on("click", "#criteriaDataBrowser span span.treeNodeDetails span.treeNodeText", function () {
+
+        // create a new div element 
+        var newDiv = document.createElement("div");
+
+        newDiv.id = "template";
+        newDiv.style = "display: none;"
+
+        // and give it some content 
+        var newContent = document.createTextNode("Loading the content...");
+        // add the text node to the newly created div
+        newDiv.appendChild(newContent);
+
+        // add the newly created element and its content into the DOM 
+        document.getElementsByTagName("body")[0].appendChild(newDiv);
+
+
+
+        $(document).on("click", "#criteriaDataBrowser .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeLine .treeNodeDetails .treeNodeText", function () {
             //$(this).attr('data-tippy','');
-            console.log($(this).text());
+            //console.log($(this).text());
+
+
 
             fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson').then(resp => resp.json()).then(data => {
 
 
-                var dataParsed = JSON.parse(data)
-                var contentHtml = ""
+                var dataParsed = JSON.parse(data);
+                var contentHtml = "";
 
                 //console.log(content)
 
@@ -42,7 +67,7 @@ window.onload = function () {
                     }
                 }
 
-                console.log(contentHtml)
+                //console.log(contentHtml)
                 //content.innerHTML = contentHtml//'<img width="500" height="500" src="' + url + '">'
                 //tip.loading = false
             }).catch(e => {
@@ -54,34 +79,47 @@ window.onload = function () {
 
 
 
+
+            /*
             var newDiv = document.createElement("div");
-
+ 
             newDiv.id = "newDiv";
-
+ 
             //newDiv.style = "display: none;"
-
+ 
             // and give it some content 
             var newContent = document.createTextNode("Loading the content...");
             // add the text node to the newly created div
             newDiv.appendChild(newContent);
+ 
+            //document.getElementById("criteriaDataBrowser").appendChild(newDiv);
+ 
+            document.getElementsByTagName("body")[0].appendChild(newDiv);
+            */
 
-            document.getElementById("criteriaDataBrowser").appendChild(newDiv);
 
-            const template = document.querySelector('#newDiv')
+            
+
+
+
+
+
+            const template = document.querySelector('#template')
             const initialText = template.textContent;
 
             const tip = tippy('#newItem', {
-                html: document.querySelector('#newDiv'),
+                //html: document.querySelector('#template'),
                 maxWidth: "40vw",
                 placement: "left-start",
-                html: '#newDiv',
+                html: '#template',
+                //trigger: "click",
                 interactive: true,
                 animateFill: false,
                 onShow() {
                     // `this` inside callbacks refers to the popper element
                     const content = this.querySelector('.tippy-content')
 
-                    console.log(this)
+                    //console.log(this)
 
                     if (tip.loading || content.innerHTML !== initialText) return
 
@@ -131,6 +169,7 @@ window.onload = function () {
                     }
                 }
             })
+
 
             // $(this).attr('title','Hi from tippy').addClass("myClass");
             // tippy(".myClass");
@@ -193,7 +232,7 @@ var loadTippy = function () {
 
 
 
-    //console.log('hi from tippy');
+    console.log('hi from tippy bottom');
 
     const tip = tippy('#criteriaDataBrowser span span span', {
         //target: '',
@@ -259,6 +298,6 @@ var loadTippy = function () {
     })
 }
 
-addElement();
-setTimeout(loadTippy, 200);
+//addElement();
+//setTimeout(loadTippy, 200);
 //loadTippy();
