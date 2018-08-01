@@ -38,7 +38,7 @@ window.onload = function () {
         var observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
 
-                console.log(mutation);
+                //console.log(mutation);
 
                 var nodeList = mutation.addedNodes;
 
@@ -53,7 +53,7 @@ window.onload = function () {
 
                 //console.log(nodeList[0].innerText);
 
-                console.log(nodeTitle + " + " + termTitle);
+                //console.log(nodeTitle + " + " + termTitle);
 
                 /*
                 // var p = document.createElement("p");
@@ -68,7 +68,7 @@ window.onload = function () {
 
 
         // pass in the target node, as well as the observer options
-        //observer.observe(target, config);
+        observer.observe(target, config);
 
 
 
@@ -88,46 +88,41 @@ window.onload = function () {
         document.getElementsByTagName("body")[0].appendChild(newDiv);
 
 
-
+        // ============================ replace with on("mouseover") =======================
         $(document).on("click", "#criteriaDataBrowser .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeLine .treeNodeDetails .treeNodeText", function () {
             //$(this).attr('data-tippy','');
-            
-            var treeNodeDetails = $(this).closest(".treeChildContainer").closest(".treeNode").children(".treeLine").text(); // = $("#criteriaDataBrowser #criteriaDataBrowser_children .treeNode .treeChildContainer .treeNode .treeLine .treeNodeDetails span").text();
-
-            
-
-            var thisText = $(this).text();
-            
-            console.log(treeNodeDetails + " || " + thisText);
 
 
 
-            fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson').then(resp => resp.json()).then(data => {
 
 
-                var dataParsed = JSON.parse(data);
-                var contentHtml = "";
+            // fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson' + searchTerm).then(resp => resp.json()).then(data => {
 
-                //console.log(content)
 
-                for (var key in dataParsed) {
-                    if (dataParsed.hasOwnProperty(key)) {
+            //     var dataParsed = JSON.parse(data);
+            //     var contentHtml = "";
 
-                        if (key == "Name") {
-                            //continue;
-                        }
+            //     //console.log(data);
+            //     //console.log(dataParsed);
 
-                        contentHtml += "<div class=\"p-0 m-0 mb-2\"><h4 class=\"mb-0 pb-0\" style=\"font-size:1rem;\">" + key + "</h4>" + dataParsed[key] + "</div>";
-                    }
-                }
+            //     for (var key in dataParsed) {
+            //         if (dataParsed.hasOwnProperty(key)) {
 
-                //console.log(contentHtml)
-                //content.innerHTML = contentHtml//'<img width="500" height="500" src="' + url + '">'
-                //tip.loading = false
-            }).catch(e => {
-                console.log('Failed to load the data')
-                //tip.loading = false
-            })
+            //             if (key == "Name") {
+            //                 //continue;
+            //             }
+
+            //             contentHtml += "<div class=\"p-0 m-0 mb-2\"><h4 class=\"mb-0 pb-0\" style=\"font-size:1rem;\">" + key + "</h4>" + dataParsed[key] + "</div>";
+            //         }
+            //     }
+
+            //     console.log(contentHtml)
+            //     //content.innerHTML = contentHtml//'<img width="500" height="500" src="' + url + '">'
+            //     //tip.loading = false
+            // }).catch(e => {
+            //     console.log('Failed to load the data')
+            //     //tip.loading = false
+            // })
 
             $(this).attr("id", "newItem");
 
@@ -153,6 +148,14 @@ window.onload = function () {
 
 
 
+            var treeNodeDetails = $(this).closest(".treeChildContainer").closest(".treeNode").children(".treeLine").text(); // = $("#criteriaDataBrowser #criteriaDataBrowser_children .treeNode .treeChildContainer .treeNode .treeLine .treeNodeDetails span").text();
+
+            var subjectAreaName = $('#criteriaDataBrowser_children .treeNode .treeChildContainer .treeNode .treeLine').first().text();
+            console.log(subjectAreaName);
+
+
+            var thisText = $(this).text();
+            var searchTerm = "/" + subjectAreaName + "_-_" + treeNodeDetails + "_-_" + thisText;
 
 
 
@@ -180,7 +183,7 @@ window.onload = function () {
                     tip.loading = true
 
 
-                    fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson').then(resp => resp.json()).then(data => {
+                    fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson' + searchTerm).then(resp => resp.json()).then(data => {
 
 
                         var dataParsed = JSON.parse(data)
@@ -199,6 +202,7 @@ window.onload = function () {
                             }
                         }
 
+                        console.log(contentHtml);
 
                         content.innerHTML = contentHtml//'<img width="500" height="500" src="' + url + '">'
                         tip.loading = false
@@ -279,7 +283,7 @@ function addElement() {
 
 }
 
-
+/*
 var loadTippy = function () {
     const template = document.querySelector('#template')
     const initialText = template.textContent
@@ -351,6 +355,8 @@ var loadTippy = function () {
         }
     })
 }
+
+*/
 
 //addElement();
 //setTimeout(loadTippy, 200);
