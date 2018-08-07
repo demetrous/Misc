@@ -81,70 +81,24 @@ window.onload = function () {
 
         // and give it some content 
         var newContent = document.createTextNode("Loading the content...");
+
+        //var newContent = document.createElement("img");
+        //newContent.src = "https://ir.unlv.edu/external-scripts/Spinner-1s-62px.gif";
+
         // add the text node to the newly created div
         newDiv.appendChild(newContent);
 
         // add the newly created element and its content into the DOM 
         document.getElementsByTagName("body")[0].appendChild(newDiv);
 
+        var numEvents = 0;
+
 
         // ============================ replace with on("mouseover") =======================
-        $(document).on("click", "#criteriaDataBrowser .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeLine .treeNodeDetails .treeNodeText", function () {
-            //$(this).attr('data-tippy','');
+        $(document).on("mouseover", "#criteriaDataBrowser .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeChildContainer .treeNode .treeLine .treeNodeDetails .treeNodeText", function () {
 
+            console.log(numEvents++);
 
-
-
-
-            // fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson' + searchTerm).then(resp => resp.json()).then(data => {
-
-
-            //     var dataParsed = JSON.parse(data);
-            //     var contentHtml = "";
-
-            //     //console.log(data);
-            //     //console.log(dataParsed);
-
-            //     for (var key in dataParsed) {
-            //         if (dataParsed.hasOwnProperty(key)) {
-
-            //             if (key == "Name") {
-            //                 //continue;
-            //             }
-
-            //             contentHtml += "<div class=\"p-0 m-0 mb-2\"><h4 class=\"mb-0 pb-0\" style=\"font-size:1rem;\">" + key + "</h4>" + dataParsed[key] + "</div>";
-            //         }
-            //     }
-
-            //     console.log(contentHtml)
-            //     //content.innerHTML = contentHtml//'<img width="500" height="500" src="' + url + '">'
-            //     //tip.loading = false
-            // }).catch(e => {
-            //     console.log('Failed to load the data')
-            //     //tip.loading = false
-            // })
-
-            $(this).attr("id", "newItem");
-
-
-
-
-            /*
-            var newDiv = document.createElement("div");
- 
-            newDiv.id = "newDiv";
- 
-            //newDiv.style = "display: none;"
- 
-            // and give it some content 
-            var newContent = document.createTextNode("Loading the content...");
-            // add the text node to the newly created div
-            newDiv.appendChild(newContent);
- 
-            //document.getElementById("criteriaDataBrowser").appendChild(newDiv);
- 
-            document.getElementsByTagName("body")[0].appendChild(newDiv);
-            */
 
 
 
@@ -157,14 +111,16 @@ window.onload = function () {
             var thisText = $(this).text();
             var searchTerm = "/" + subjectAreaName + "_-_" + treeNodeDetails + "_-_" + thisText;
 
-
-
-
+            $(this).attr("id", subjectAreaName.replace(/\s/g, '') + treeNodeDetails.replace(/\s/g, '') + thisText.replace(/\s/g, ''));
 
             const template = document.querySelector('#template')
             const initialText = template.textContent;
 
-            const tip = tippy('#newItem', {
+            var thisId = "#" + $(this).attr("id");
+
+            console.log(thisId);
+
+            const tip = tippy(thisId, {
                 //html: document.querySelector('#template'),
                 maxWidth: "40vw",
                 placement: "left-start",
@@ -172,16 +128,17 @@ window.onload = function () {
                 //trigger: "click",
                 interactive: true,
                 animateFill: false,
+
                 onShow() {
                     // `this` inside callbacks refers to the popper element
-                    const content = this.querySelector('.tippy-content')
-
+                    var content = this.querySelector('.tippy-content')
+                    //content.innerHTML = 'Init text';
                     //console.log(this)
 
                     if (tip.loading || content.innerHTML !== initialText) return
 
                     tip.loading = true
-
+                    console.log(searchTerm)
 
                     fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson' + searchTerm).then(resp => resp.json()).then(data => {
 
@@ -202,17 +159,18 @@ window.onload = function () {
                             }
                         }
 
-                        console.log(contentHtml);
 
-                        content.innerHTML = contentHtml//'<img width="500" height="500" src="' + url + '">'
+                        console.log(contentHtml)
+
+                        content.innerHTML = contentHtml //'<img width="500" height="500" src="' + url + '">'
                         tip.loading = false
                     }).catch(e => {
-                        content.innerHTML = 'Failed to load a definition'
+                        content.innerHTML = 'No Definition Found'
                         tip.loading = false
                     })
                 },
                 onHidden() {
-                    const content = this.querySelector('.tippy-content')
+                    var content = this.querySelector('.tippy-content')
                     content.innerHTML = initialText
                 },
                 // prevent tooltip from displaying over button
@@ -228,136 +186,12 @@ window.onload = function () {
                 }
             })
 
-
-            // $(this).attr('title','Hi from tippy').addClass("myClass");
-            // tippy(".myClass");
-
-            // var newDiv = document.createElement("button");
-
-            // newDiv.className = "newBtn";
-            // newDiv.title = "Hello from button";
-
-            // //newDiv.style = "display: none;"
-
-            // // and give it some content 
-            // var newContent = document.createTextNode("Loading the content...");
-            // // add the text node to the newly created div
-            // newDiv.appendChild(newContent);
-
-            // // add the newly created element and its content into the DOM 
-            // document.getElementById("criteriaDataBrowser").appendChild(newDiv);
-            // tippy(".newBtn");
-
-            // var script = document.createElement("script");
-            // script.type = "text/javascript";
-            // script.src = 'tippy(".newBtn");';
-            // document.getElementsByTagName("#criteriaDataBrowser")[0].appendChild(script);
-
-
+            numEvents = 0;
 
         });
+
+
 
     });
 };
 
-
-//console.log('hi from criteria');
-
-
-
-
-function addElement() {
-    // create a new div element 
-    var newDiv = document.createElement("div");
-
-    newDiv.id = "template";
-    newDiv.style = "display: none;"
-
-    // and give it some content 
-    var newContent = document.createTextNode("Loading the content...");
-    // add the text node to the newly created div
-    newDiv.appendChild(newContent);
-
-    // add the newly created element and its content into the DOM 
-    document.getElementsByTagName("body")[0].appendChild(newDiv);
-
-}
-
-/*
-var loadTippy = function () {
-    const template = document.querySelector('#template')
-    const initialText = template.textContent
-
-
-
-    console.log('hi from tippy bottom');
-
-    const tip = tippy('#criteriaDataBrowser span span span', {
-        //target: '',
-        interactive: true,
-        trigger: "click",
-        arrow: true,
-        maxWidth: '40vw',
-        placement: 'left-start',
-        html: '#template',
-        onShow() {
-            // `this` inside callbacks refers to the popper element
-            const content = this.querySelector('.tippy-content')
-
-            console.log(this)
-
-            if (tip.loading || content.innerHTML !== initialText) return
-
-            tip.loading = true
-
-
-            fetch('https://ir.unlv.edu/UmbracoODS/umbraco/api/DataDictionaryApi/GetJson').then(resp => resp.json()).then(data => {
-
-
-                var dataParsed = JSON.parse(data)
-                var contentHtml = ""
-
-                //console.log(content)
-
-                for (var key in dataParsed) {
-                    if (dataParsed.hasOwnProperty(key)) {
-
-                        if (key == "Name") {
-                            //continue;
-                        }
-
-                        contentHtml += "<div class=\"p-0 m-0 mb-2\"><h4 class=\"mb-0 pb-0\" style=\"font-size:1rem;\">" + key + "</h4>" + dataParsed[key] + "</div>";
-                    }
-                }
-
-
-                content.innerHTML = contentHtml//'<img width="500" height="500" src="' + url + '">'
-                tip.loading = false
-            }).catch(e => {
-                content.innerHTML = 'Failed to load a definition'
-                tip.loading = false
-            })
-        },
-        onHidden() {
-            const content = this.querySelector('.tippy-content')
-            content.innerHTML = initialText
-        },
-        // prevent tooltip from displaying over button
-        popperOptions: {
-            modifiers: {
-                preventOverflow: {
-                    enabled: false
-                },
-                hide: {
-                    enabled: false
-                }
-            }
-        }
-    })
-}
-
-*/
-
-//addElement();
-//setTimeout(loadTippy, 200);
-//loadTippy();
