@@ -114,7 +114,7 @@ window.onload = function () {
             $(this).attr("id", subjectAreaName.replace(/\s/g, '') + treeNodeDetails.replace(/\s/g, '') + thisText.replace(/\s/g, ''));
 
             const template = document.querySelector('#template')
-            const initialText = template.textContent;
+            const initialText = template.textContent;           
 
             var thisId = "#" + $(this).attr("id");
 
@@ -172,6 +172,7 @@ window.onload = function () {
                 onHidden() {
                     var content = this.querySelector('.tippy-content')
                     content.innerHTML = initialText
+                    this._tippy.destroy();
                 },
                 // prevent tooltip from displaying over button
                 popperOptions: {
