@@ -35,40 +35,40 @@ window.onload = function () {
         };
 
         // create an observer instance
-        var observer = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
+        // var observer = new MutationObserver(function (mutations) {
+        //     mutations.forEach(function (mutation) {
 
-                //console.log(mutation);
+        //         //console.log(mutation);
 
-                var nodeList = mutation.addedNodes;
+        //         var nodeList = mutation.addedNodes;
 
-                var nodeTitle = $(target).siblings('.treeLine').text();
+        //         var nodeTitle = $(target).siblings('.treeLine').text();
 
-                var termTitle = "";
+        //         var termTitle = "";
 
-                if (nodeList.length > 0) {
-                    termTitle = nodeList[0].innerText; //$(target).children(".treeNode").last().children('.treeLine').children('.treeNodeDetails').children('.treeNodeText').text();
-                }
-
-
-                //console.log(nodeList[0].innerText);
-
-                //console.log(nodeTitle + " + " + termTitle);
-
-                /*
-                // var p = document.createElement("p");
-                // p.innerHTML = "type: " + mutation.type + "<br />" +
-                //     "target id: " + mutation.target.id + "<br />" +
-                //     "target attribute foo: " + mutation.target.attributes['foo'].value + "<br />";
-
-                // document.querySelector('.console').appendChild(p);
-                */
-            });
-        });
+        //         if (nodeList.length > 0) {
+        //             termTitle = nodeList[0].innerText; //$(target).children(".treeNode").last().children('.treeLine').children('.treeNodeDetails').children('.treeNodeText').text();
+        //         }
 
 
-        // pass in the target node, as well as the observer options
-        observer.observe(target, config);
+        //         //console.log(nodeList[0].innerText);
+
+        //         //console.log(nodeTitle + " + " + termTitle);
+
+        //         /*
+        //         // var p = document.createElement("p");
+        //         // p.innerHTML = "type: " + mutation.type + "<br />" +
+        //         //     "target id: " + mutation.target.id + "<br />" +
+        //         //     "target attribute foo: " + mutation.target.attributes['foo'].value + "<br />";
+
+        //         // document.querySelector('.console').appendChild(p);
+        //         */
+        //     });
+        // });
+
+
+        // // pass in the target node, as well as the observer options
+        // observer.observe(target, config);
 
 
 
